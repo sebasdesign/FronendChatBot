@@ -1,0 +1,14 @@
+.diamond-gradient {
+    width: 200px;
+    height: 200px;
+    background: conic-gradient(
+      from 0deg,
+      red,     /* Arriba y abajo */
+      black 25%, /* Centro negro */
+      red 50%    /* Esquinas rojas */
+    );
+  }
+  
+  
+  
+  
