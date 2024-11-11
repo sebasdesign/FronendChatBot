@@ -1,34 +1,44 @@
 import { Link, useNavigate } from "react-router-dom";
 import "@/auth/components/ingreso/Login.css";
-import axios from "axios";
-import { useFormik } from "formik";
-import { LoginValidacion } from "@/auth/components/ingreso/LoginValidacion";
-
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      correo: "",
-      contrasenna: "",
-    },
-    validationSchema: LoginValidacion,
-    onSubmit: (values) => {
-      const usuario = values.correo;
-      const password = values.contrasenna;
-      const url = "https://localhost:7263/api/Usuario";
-      axios
-        .get(`${url}/${usuario}/${password}`)
-        .then(() => {
-          //showSwal();
-          navigate("/chat");
-        })
-        .catch((error) => {
-          console.error(error.response.data);
-          //showSwal2();
-        });
-    },
-  });
+  const [correo, setCorreo] = useState("");
+  const [contrasenna, setContrasenna] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const url = `https://localhost:7263/api/Usuario/${correo}/${contrasenna}`;
+
+    try {
+      const response = await fetch(url);
+
+      if (response.status === 404) {
+        setError("Usuario no encontrado o contraseña incorrecta.");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en el inicio de sesión");
+      }
+
+      const text = await response.text();
+      if (text) {
+        const usuarioData = JSON.parse(text);
+        localStorage.setItem("usuario", JSON.stringify(usuarioData));
+        navigate("/chat");
+      } else {
+        throw new Error("Respuesta vacía del servidor");
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Ocurrió un error inesperado.");
+    }
+  };
+
   return (
     <div className="flex justify-center flex-col items-center rounded-xl bg-black bg-cover text-white w-80 space-y-3 p-3">
       <div className="text-center">
@@ -38,7 +48,7 @@ const Login = () => {
         <h3 className="text-sm">Ingresa a tu cuenta</h3>
       </div>
       <form
-        onSubmit={formik.handleSubmit}
+        onSubmit={handleSubmit}
         className="flex flex-col space-y-4 text-center"
       >
         <button className="bg-white text-neutral-950 rounded-xl p-2 hover hover:bg-neutral-100">
@@ -46,37 +56,20 @@ const Login = () => {
         </button>
         <p>Ó</p>
         <input
-              type="text"
-              placeholder="Usuario"
-              name="correo"
-              value={formik.values.correo}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={
-                formik.errors.correo && formik.touched.correo
-                  ? "focus:shadow-outline appearance-none rounded-xl border border-red-800 p-3 leading-tight bg-transparent text-red-800"
-                  : "focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
-              }
-            />
-            {formik.touched.correo && formik.errors.correo ? (
-              <div className="text-red-500 text-xs">{formik.errors.correo}</div>
-            ) : null}
+          type="text"
+          placeholder="Usuario"
+          value={correo}
+          onChange={(e) => setCorreo(e.target.value)}
+          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+        />
         <input
-              type="password"
-              placeholder="**********"
-              name="contrasenna"
-              value={formik.values.contrasenna}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={
-                formik.errors.contrasenna && formik.touched.contrasenna
-                  ? "focus:shadow-outline appearance-none rounded-xl border border-red-800 p-3 leading-tight bg-transparent text-red-800"
-                  : "focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
-              }
-            />
-            {formik.touched.contrasenna && formik.errors.contrasenna ? (
-              <div className="text-red-500 text-xs">{formik.errors.contrasenna}</div>
-            ) : null}
+          type="password"
+          placeholder="**********"
+          value={contrasenna}
+          onChange={(e) => setContrasenna(e.target.value)}
+          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+        />
+        {error && <div className="text-red-500 text-xs">{error}</div>}
         <button
           className="bg-red-800 p-2 rounded-xl hover hover:bg-red-700"
           type="submit"
@@ -84,8 +77,8 @@ const Login = () => {
           Iniciar Sesión
         </button>
       </form>
-      <div className=" flex text-[0.55rem] space-x-6">
-        <p className=" items-start">
+      <div className="flex text-[0.55rem] space-x-6">
+        <p>
           ¿Aún no tienes cuenta?{" "}
           <Link className="hover hover:underline" to="/registro">
             Regístrate
