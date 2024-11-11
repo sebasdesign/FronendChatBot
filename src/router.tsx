@@ -2,17 +2,16 @@ import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import ErrorPage from "./shared/ErrorPage";
+import Advertencia from "./components/Advertencia";
 
+const Layout = lazy(() => import("@/Layout"));
+const Login = lazy(() => import("@/pages/Login/Login"));
+const Register = lazy(() => import("@/pages/Register/Register"));
+const Spinner = lazy(() => import("@/shared/Spinner"));
+const Chat = lazy(() => import("@/pages/Chat/Chat"));
 
-const Layout = lazy (() => import ('@/Layout'));
-const Login = lazy (() => import ('@/pages/Login/Login'));
-const Register = lazy (() => import('@/pages/Register/Register'));
-const Spinner = lazy (() => import('@/shared/Spinner'));
-const Chat =lazy (()=>import('@/pages/Chat/Chat'))
-
-
-export const router = createBrowserRouter([{
-
+export const router = createBrowserRouter([
+  {
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
@@ -26,7 +25,7 @@ export const router = createBrowserRouter([{
         ),
       },
       {
-        path: '/login',
+        path: "/login",
         index: true,
         element: (
           <Suspense fallback={<Spinner />}>
@@ -35,7 +34,7 @@ export const router = createBrowserRouter([{
         ),
       },
       {
-        path: '/registro',
+        path: "/registro",
         index: true,
         element: (
           <Suspense fallback={<Spinner />}>
@@ -44,7 +43,7 @@ export const router = createBrowserRouter([{
         ),
       },
       {
-        path: '/Chat',
+        path: "/Chat",
         index: true,
         element: (
           <Suspense fallback={<Spinner />}>
@@ -52,7 +51,6 @@ export const router = createBrowserRouter([{
           </Suspense>
         ),
       },
-      
     ],
-
-}])
+  },
+]);
