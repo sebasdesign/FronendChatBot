@@ -3,3 +3,8 @@
 .texto{
     font-family: "Raleway Dots";
 }
+
+.imagen{
+    background-image: url(../../../assets/FondoChat.jpg);
+    background-position: center center;
+}

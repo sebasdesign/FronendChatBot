@@ -1,4 +1,5 @@
-import "@/auth/components/ingreso/Login.css";
+import "@/auth/components/registro/Register.css";
+import BotonAtras from "@/components/BotonAtras";
 import { useState } from "react";
 
 const Register = () => {
@@ -52,16 +53,19 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center flex-col items-center rounded-xl bg-black bg-cover text-white w-80 space-y-3 p-3">
+    <div className="imagen h-screen flex justify-center items-center">
+      <div className="absolute left-64 top-20"><BotonAtras/></div>
+      <div className="flex justify-center flex-col items-center text-white w-96 space-y-3 p-3">
       <div className="text-center">
         <h1 className="text-xl">
           Bienvenido a <span className="texto">Chatbot</span>
         </h1>
         <h3 className="text-sm">Crea tu cuenta</h3>
       </div>
+      
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col space-y-4 text-center"
+        className="flex flex-col space-y-4 text-center w-64"
       >
         <input
           type="text"
@@ -69,7 +73,7 @@ const Register = () => {
           name="identificacion"
           value={formData.identificacion}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -77,7 +81,7 @@ const Register = () => {
           name="nombre"
           value={formData.nombre}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -85,7 +89,7 @@ const Register = () => {
           name="apellido"
           value={formData.apellido}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -93,7 +97,7 @@ const Register = () => {
           name="correo"
           value={formData.correo}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -101,7 +105,7 @@ const Register = () => {
           name="semestre"
           value={formData.semestre}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -109,7 +113,7 @@ const Register = () => {
           name="codigo"
           value={formData.codigo}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="text"
@@ -117,7 +121,7 @@ const Register = () => {
           name="tipoUsuario"
           value={formData.tipoUsuario}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <input
           type="password"
@@ -125,7 +129,7 @@ const Register = () => {
           name="contrasenna"
           value={formData.contrasenna}
           onChange={handleChange}
-          className="focus:shadow-outline appearance-none rounded-xl border border-white p-3 leading-tight bg-transparent"
+          className="focus:shadow-outline appearance-none text-sm rounded-xl border border-white p-2 leading-tight bg-transparent"
         />
         <button
           className="bg-red-800 p-2 rounded-xl hover hover:bg-red-700"
@@ -134,6 +138,7 @@ const Register = () => {
           Crear Cuenta
         </button>
       </form>
+    </div>
     </div>
   );
 };

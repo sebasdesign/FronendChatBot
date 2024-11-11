@@ -1,4 +1,6 @@
+import PopPup from "@/components/PopPup";
 import { useState } from "react";
+import { IoSendOutline } from "react-icons/io5";
 
 interface Message {
   from: "user" | "bot";
@@ -52,15 +54,16 @@ const Chat = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="bg-gray-100 p-4 rounded-lg mb-4 min-h-[400px] max-h-[600px] overflow-y-auto">
+    <div className="p-4 bg-black flex flex-col items-center justify-center h-screen">
+      <div className="absolute right-6 top-6"><PopPup/></div>
+      <div className="bg-black p-4 w-7/12 mb-4 h-5/6 overflow-y-auto">
         {messages.map((msg, index) => (
           <div
             key={index}
             className={`mb-4 ${
               msg.from === "bot"
-                ? "bg-blue-100 p-3 rounded-lg"
-                : "bg-green-100 p-3 rounded-lg ml-auto"
+                ? "bg-white p-3 rounded-lg"
+                : "bg-red-800 p-3 rounded-lg ml-auto"
             }`}
             style={{ maxWidth: "80%" }}
           >
@@ -71,26 +74,29 @@ const Chat = () => {
           </div>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 w-7/12 border rounded">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-          className="flex-1 p-2 border rounded"
+          className="flex-1 p-2 bg-transparent text-white"
           placeholder={
             isFirstMessage
               ? "Comienza saludando con 'hola'"
               : "Escribe tu mensaje..."
           }
+          
         />
-        <button
+         <button
           onClick={handleSendMessage}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="text-white px-4 hover:scale-110"
         >
-          Enviar
+          <IoSendOutline className="size-5"/>
         </button>
+       
       </div>
+      
     </div>
   );
 };

@@ -2,7 +2,6 @@ import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import ErrorPage from "./shared/ErrorPage";
-import Advertencia from "./components/Advertencia";
 
 const Layout = lazy(() => import("@/Layout"));
 const Login = lazy(() => import("@/pages/Login/Login"));
